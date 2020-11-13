@@ -211,6 +211,7 @@ class KinMPCPathFollower(Controller):
 		return sol_dict
 
 	def update(self, update_dict):
+		print(update_dict)
 		# TODO: 'psi0' should be replaced by 'ay0' later.
 		self._update_initial_condition( *[update_dict[key] for key in ['s', 'e_y', 'e_psi', 'v0', 'psi0']] )	
 		
