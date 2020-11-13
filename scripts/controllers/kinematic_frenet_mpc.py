@@ -10,6 +10,7 @@ class KinMPCPathFollower(Controller):
 	def __init__(self, 
 		         N          = 10,     # timesteps in MPC Horizon
 		         DT_MODEL	= 0.2,    # discretization time between timesteps (s)
+				 DT	= 0.2,    
 		         L_F        = 1.5213, # distance from CoG to front axle (m)
 		         L_R        = 1.4987, # distance from CoG to rear axle (m)
 				 V_SET		= 45./2.237,	# velocity set by a driver (m/s)
