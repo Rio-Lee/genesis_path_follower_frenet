@@ -56,11 +56,15 @@ class KinMPCPathFollower(Controller):
 		# First index corresponds to our desired state at timestep k+1:
 		#   i.e. z_ref[0,:] = z_{desired, 1}.
 		# Second index selects the state element from [x_k, y_k, psi_k, v_k].
-		# Note that, in this controller, v_k set as a constant value, v_ref, is used for the entire horizon N.
-
-		self.z_ref = self.opti.parameter(1, 5) # [Not Used, Not Used, Not Used, v_ref, Not Used]
+		self.z_ref = self.opti.parameter(self.N, 4)
+		self.z_ref2 = self.opti.parameter(1, 5) # [Not Used, Not Used, Not Used, v_ref, Not Used]
 
 		## Reference curvature we would like to follow.
+		self.x_ref   = self.z_ref[:,0]
+		self.y_ref   = self.z_ref[:,1]
+		self.psi_ref = self.z_ref[:,2]
+		self.v_ref   = self.z_ref[:,3]
+
 		self.curv_ref = self.opti.parameter(self.N)
 
 		'''
@@ -101,8 +105,13 @@ class KinMPCPathFollower(Controller):
 		self._add_cost()	
 
 		self._update_initial_condition(0., 0., 0., 1., 0.)
+
+		self._update_reference([self.DT * (x+1) for x in range(self.N)],
+			                  self.N*[0.], 
+			                  self.N*[0.], 
+			                  self.N*[1.])
 		
-		self._update_reference(self.N*[0.], [0., 0., 0., 20., 0.])
+		self._update_reference2(self.N*[0.], [0., 0., 0., 20., 0.])
 		
 		self._update_previous_input(0., 0.)
 		
@@ -171,7 +180,7 @@ class KinMPCPathFollower(Controller):
 		
 		cost = 0
 		for i in range(self.N):
-			cost += _quad_form(self.z_dv[i, :]-self.z_ref, self.Q)
+			cost += _quad_form(self.z_dv[i, :]-self.z_ref2, self.Q)
 
 		for i in range(self.N - 1):
 			cost += _quad_form(self.u_dv[i+1, :] - self.u_dv[i,:], self.R)
@@ -213,12 +222,13 @@ class KinMPCPathFollower(Controller):
 	def update(self, update_dict):
 		# TODO: 'psi0' should be replaced by 'ay0' later.
 		self._update_initial_condition( *[update_dict[key] for key in ['s', 'e_y', 'e_psi', 'v0', 'psi0']] )	
+		self._update_reference( *[update_dict[key] for key in ['x_ref', 'y_ref', 'psi_ref', 'v_ref']] )
 		
 		# Calculate the maximum from the upcoming curvatures.
 		curvature_max = max(abs(update_dict['curv_ref']))
-		v_ref = np.sqrt(self.AY_MAX/abs(curvature_max))
-		v_ref = min(self.V_SET, v_ref)
-		self._update_reference( update_dict['curv_ref'], [0, 0, 0, v_ref, 0] )
+		v_target = np.sqrt(self.AY_MAX/abs(curvature_max))
+		v_target = min(self.V_SET, v_target)
+		self._update_reference2( update_dict['curv_ref'], [0, 0, 0, v_target, 0] )
 
 		self._update_previous_input( *[update_dict[key] for key in ['acc_prev', 'df_prev']] )
 
@@ -232,10 +242,16 @@ class KinMPCPathFollower(Controller):
 	def _update_initial_condition(self, s0, ey0, epsi0, vel0, ay0):
 		self.opti.set_value(self.z_curr, [s0, ey0, epsi0, vel0, ay0])
 
+	def _update_reference(self, x_ref, y_ref, psi_ref, v_ref):
+		self.opti.set_value(self.x_ref,   x_ref)
+		self.opti.set_value(self.y_ref,   y_ref)
+		self.opti.set_value(self.psi_ref, psi_ref)
+		self.opti.set_value(self.v_ref,   v_ref)
+
 	##
-	def _update_reference(self, curv_ref, z_ref):
+	def _update_reference2(self, curv_ref, z_ref2):
 		self.opti.set_value(self.curv_ref, curv_ref)
-		self.opti.set_value(self.z_ref, z_ref)
+		self.opti.set_value(self.z_ref2, z_ref2)
 
 	def _update_previous_input(self, acc_prev, df_prev):
 		self.opti.set_value(self.u_prev, [acc_prev, df_prev])
