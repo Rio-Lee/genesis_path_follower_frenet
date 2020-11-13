@@ -21,7 +21,7 @@
   <param name="vehicle/time_check_on" type="bool" value="False"/>
 
   <!-- Controller Selection -->
-  <param name="vehicle/controller" type="str" value="kinematic_mpc"/>
+  <param name="vehicle/controller" type="str" value="kinematic_frenet_mpc"/>
 
   <!--...................................................................-->
 
