@@ -117,7 +117,7 @@ class KinMPCPathFollower(Controller):
 		
 		# Ipopt with custom options: https://web.casadi.org/docs/ -> see sec 9.1 on Opti stack.
 		p_opts = {'expand': True}
-		s_opts = {'max_cpu_time': 0.2, 'print_level': 0} 
+		s_opts = {'max_cpu_time': 0.1, 'print_level': 0} 
 		self.opti.solver('ipopt', p_opts, s_opts)
 
 		sol = self.solve()
