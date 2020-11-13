@@ -148,7 +148,7 @@ class GPSRefTrajectory():
 			interp_by_key = 't'
 			interp_to_fit = [h*self.traj_dt + start_tm for h in range(1, self.traj_horizon+1)]
 
-		waypoint_dict = {}
+		# waypoint_dict = {}
 		for waypoint_key in ['x', 'y', 'psi', 'cdist', 'curv']:
 			waypoint_dict[waypoint_key + '_ref'] = np.interp(interp_to_fit, \
 				                                    self.trajectory[:, self.access_map[interp_by_key]], \
