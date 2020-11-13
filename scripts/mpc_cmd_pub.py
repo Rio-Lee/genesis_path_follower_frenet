@@ -155,6 +155,7 @@ class MPCCommandPublisher():
 			loop_rate.sleep()
 
 	def publish_mpc_path_message(self, sol_dict):
+		print(sol_dict)
 		mpc_path_msg = mpc_path()
 		
 		mpc_path_msg.header.stamp = rospy.get_rostime()
