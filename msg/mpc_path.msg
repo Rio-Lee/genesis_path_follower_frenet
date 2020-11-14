@@ -11,3 +11,6 @@ float64[] vr        # MPC reference for ""
 float64[] psir      # MPC reference for ""
 float64[] df        # MPC solution for front steering angle (rad)
 float64[] acc       # MPC solution for acceleration (m/s^2)
+float64 s
+float64 e_y
+float64 e_psi

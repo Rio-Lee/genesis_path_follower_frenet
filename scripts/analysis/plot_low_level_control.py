@@ -41,7 +41,7 @@ def make_llc_plot(bagfile):
 	# if the controller is enabled or not.
 	t_enable = None
 	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):
-		if msg.solv_status == 'Optimal':
+		if msg.solv_status == 'optimal':
 			t_enable = msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs
 			break
 			

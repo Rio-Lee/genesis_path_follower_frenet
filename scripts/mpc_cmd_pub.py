@@ -150,11 +150,11 @@ class MPCCommandPublisher():
 				update_dict['warm_start']['u_ws']  = sol_dict['u_mpc'] 
 				update_dict['warm_start']['sl_ws'] = sol_dict['sl_mpc'] 
 
-				self.publish_mpc_path_message(sol_dict)
+				self.publish_mpc_path_message(sol_dict, waypoint_dict)
 
 			loop_rate.sleep()
 
-	def publish_mpc_path_message(self, sol_dict):
+	def publish_mpc_path_message(self, sol_dict, waypoint_dict):
 		print(sol_dict)
 		mpc_path_msg = mpc_path()
 		
@@ -174,6 +174,10 @@ class MPCCommandPublisher():
 
 		mpc_path_msg.acc  = sol_dict['u_mpc'][:,0] # acc_mpc
 		mpc_path_msg.df   = sol_dict['u_mpc'][:,1] # df_mpc
+
+		mpc_path_msg.s   = waypoint_dict['s']
+		mpc_path_msg.e_y   = waypoint_dict['e_y']
+		mpc_path_msg.e_psi   = waypoint_dict['e_psi']
 
 		self.mpc_path_pub.publish(mpc_path_msg)
 				

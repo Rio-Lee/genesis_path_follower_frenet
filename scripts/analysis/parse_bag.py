@@ -101,9 +101,16 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 	# if the controller is enabled or not.
 	t_enable = None
 	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):
-		if msg.solve_status == 'Optimal':
+		if msg.solve_status == 'optimal':
 			t_enable = msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs
-			break				
+			break	
+
+	t_mpc_msg = []; s = []; e_y = []; e_psi = [];
+	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):		
+		t_mpc_msg.append(msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs)
+		s.append(msg.s)
+		e_y.append(msg.e_y)
+		e_psi.append(msg.e_psi)
 	
 	# Some notes on the resulting output data.
 	# If simulated data, lat/lon will just be an array of 0's.
@@ -130,6 +137,11 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 	rdict['a_lat'] = se_lat_accel
 	rdict['a_long'] = se_long_accel
 	rdict['df']  = df
+
+	rdict['t_mpc_msg']   = t_mpc_msg
+	rdict['s'] = s
+	rdict['e_y'] = e_y
+	rdict['e_psi'] = e_psi
 				
 	sio.savemat(out_mat, rdict)
 
