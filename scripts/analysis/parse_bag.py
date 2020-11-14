@@ -105,9 +105,10 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 			t_enable = msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs
 			break	
 
-	t_mpc_msg = []; s = []; e_y = []; e_psi = [];
+	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = [];
 	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):		
 		t_mpc_msg.append(msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs)
+		solve_status.append(msg.solve_status)
 		s.append(msg.s)
 		e_y.append(msg.e_y)
 		e_psi.append(msg.e_psi)
@@ -139,6 +140,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 	rdict['df']  = df
 
 	rdict['t_mpc_msg']   = t_mpc_msg
+	rdict['solve_status'] = solve_status
 	rdict['s'] = s
 	rdict['e_y'] = e_y
 	rdict['e_psi'] = e_psi
