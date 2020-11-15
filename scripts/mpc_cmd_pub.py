@@ -179,6 +179,7 @@ class MPCCommandPublisher():
 		mpc_path_msg.s   = waypoint_dict['s']
 		mpc_path_msg.e_y   = waypoint_dict['e_y']
 		mpc_path_msg.e_psi   = waypoint_dict['e_psi']
+		mpc_path_msg.v_ref   = sol_dict['z_ref2'][3]
 
 		self.mpc_path_pub.publish(mpc_path_msg)
 				

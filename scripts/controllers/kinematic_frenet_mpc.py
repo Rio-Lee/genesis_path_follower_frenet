@@ -197,6 +197,7 @@ class KinMPCPathFollower(Controller):
 			z_mpc  = sol.value(self.z_dv)
 			sl_mpc = sol.value(self.sl_dv)
 			z_ref  = sol.value(self.z_ref)
+			z_ref2  = sol.value(self.z_ref2)
 			is_opt = True
 		except:
 			# Suboptimal solution (e.g. timed out).
@@ -204,6 +205,7 @@ class KinMPCPathFollower(Controller):
 			z_mpc  = self.opti.debug.value(self.z_dv)
 			sl_mpc = self.opti.debug.value(self.sl_dv)
 			z_ref  = self.opti.debug.value(self.z_ref)
+			z_ref2  = self.opti.debug.value(self.z_ref2)			
 			is_opt = False
 
 		solve_time = time.time() - st
@@ -216,6 +218,7 @@ class KinMPCPathFollower(Controller):
 		sol_dict['z_mpc']      = z_mpc       # solution states (N+1 by 4, see self.z_dv above)
 		sol_dict['sl_mpc']     = sl_mpc      # solution slack vars (N by 2, see self.sl_dv above)
 		sol_dict['z_ref']      = z_ref       # state reference (N by 4, see self.z_ref above)
+		sol_dict['z_ref2']      = z_ref2
 
 		return sol_dict
 

@@ -105,7 +105,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 			t_enable = msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs
 			break	
 
-	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = []; ay_mpc = [];
+	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = []; ay_mpc = []; v_ref = [];
 	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):		
 		t_mpc_msg.append(msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs)
 		solve_status.append(msg.solve_status)
@@ -113,6 +113,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 		e_y.append(msg.e_y)
 		e_psi.append(msg.e_psi)
 		ay_mpc.append(msg.ays[0])
+		v_ref.append(msg.v_ref)
 	
 	# Some notes on the resulting output data.
 	# If simulated data, lat/lon will just be an array of 0's.
@@ -146,6 +147,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 	rdict['e_y'] = e_y
 	rdict['e_psi'] = e_psi
 	rdict['ay_mpc'] = ay_mpc
+	rdict['v_ref'] = v_ref
 				
 	sio.savemat(out_mat, rdict)
 

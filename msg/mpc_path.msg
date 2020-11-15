@@ -15,3 +15,4 @@ float64 s
 float64 e_y
 float64 e_psi
 float64[] ays
+float64 v_ref
