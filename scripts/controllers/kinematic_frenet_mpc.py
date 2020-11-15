@@ -31,7 +31,7 @@ class KinMPCPathFollower(Controller):
 				 EPSI_MAX	=  10*np.pi/180,
 				 EPSI_MIN	= -10*np.pi/180,
 				 Q = [0., 100., 500., 1., 0.],  # s, ey, epsi, v, ay
-				 R = [1., .1]):  # ax, df
+				 R = [10., 100.]):  # ax, df
 
 		for key in list(locals()):
 			if key == 'self':
