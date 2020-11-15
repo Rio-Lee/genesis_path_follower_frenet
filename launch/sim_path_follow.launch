@@ -12,7 +12,7 @@
   <!-- The trajectory can be generated using recorded time or a target velocity. -->
   <!-- Set track_using_time to True to allow for time-varying velocity. -->
   <!-- Set track_using_time to False to use target_vel (m/s) instead. -->
-  <param name="vehicle/track_using_time" type="bool" value="True" />
+  <param name="vehicle/track_using_time" type="bool" value="False" />
   <param name="vehicle/target_vel" type="double" value="1.0" />
 
   <!-- Waypoints CSV to specify path. -->

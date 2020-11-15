@@ -123,7 +123,7 @@ class MPCCommandPublisher():
 				waypoint_dict = self.ref_traj.get_waypoints(state['x0'], state['y0'], state['psi0'], v_target=None)
 			else:
 				# Trajectory tracking with a fixed speed profile.
-				waypoint_dict = self.ref_traj.get_waypoints(state['x0'], state['y0'], state['psi0'], v_target=target_vel)	
+				waypoint_dict = self.ref_traj.get_waypoints(state['x0'], state['y0'], state['psi0'], state['v0'])	
 
 			if waypoint_dict['stop']:
 				self.acc_pub.publish(Float32Msg(-1.0))
