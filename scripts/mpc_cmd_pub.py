@@ -162,10 +162,11 @@ class MPCCommandPublisher():
 		mpc_path_msg.solve_status = 'optimal' if sol_dict['optimal'] else 'suboptimal'
 		mpc_path_msg.solve_time = sol_dict['solve_time']
 
-		mpc_path_msg.xs   = sol_dict['z_mpc'][:,0] # x_mpc
-		mpc_path_msg.ys   = sol_dict['z_mpc'][:,1] # y_mpc
-		mpc_path_msg.psis = sol_dict['z_mpc'][:,2] # psi_mpc
+		mpc_path_msg.xs   = sol_dict['z_mpc'][:,0] # x_mpc # s_mpc
+		mpc_path_msg.ys   = sol_dict['z_mpc'][:,1] # y_mpc # ey_mpc
+		mpc_path_msg.psis = sol_dict['z_mpc'][:,2] # psi_mpc # epsi_mpc
 		mpc_path_msg.vs   = sol_dict['z_mpc'][:,3] # v_mpc
+		mpc_path_msg.ays   = sol_dict['z_mpc'][:,4] # ay_mpc
 
 		mpc_path_msg.xr   = sol_dict['z_ref'][:,0] # x_ref
 		mpc_path_msg.yr   = sol_dict['z_ref'][:,1] # y_ref

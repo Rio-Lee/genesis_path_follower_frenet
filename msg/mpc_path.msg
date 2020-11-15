@@ -14,3 +14,4 @@ float64[] acc       # MPC solution for acceleration (m/s^2)
 float64 s
 float64 e_y
 float64 e_psi
+float64[] ays
