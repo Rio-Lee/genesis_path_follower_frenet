@@ -126,8 +126,8 @@ class KinMPCPathFollower(Controller):
 		## State Bound Constraints
 		self.opti.subject_to( self.opti.bounded(self.EY_MIN, self.ey_dv, self.EY_MAX) )
 		self.opti.subject_to( self.opti.bounded(self.EPSI_MIN, self.epsi_dv, self.EPSI_MAX) )
-		for i in range(self.N):
-			self.opti.subject_to( self.opti.bounded(self.AY_MIN - self.sl_ay_dv[i], self.ay_dv, self.AY_MAX + self.sl_ay_dv[i]) )		
+		# for i in range(self.N):
+		# 	self.opti.subject_to( self.opti.bounded(self.AY_MIN - self.sl_ay_dv[i], self.ay_dv, self.AY_MAX + self.sl_ay_dv[i]) )		
 
 		## Initial State Constraint
 		self.opti.subject_to( self.s_dv[0]   == self.z_curr[0] )   
