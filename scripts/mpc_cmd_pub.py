@@ -106,7 +106,7 @@ class MPCCommandPublisher():
 			self.current_state['v0']   = msg.v			
 			
 	def pub_loop(self):
-		loop_rate = rospy.Rate(50.0)
+		loop_rate = rospy.Rate(20.0)
 		update_dict = {} # contains parameter/warm start information needed for the MPC module.
 
 		while not rospy.is_shutdown():
