@@ -112,7 +112,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 		s.append(msg.s)
 		e_y.append(msg.e_y)
 		e_psi.append(msg.e_psi)
-		ay_mpc.append(msg.ay_mdl[0])
+		ay_mdl.append(msg.ay_mdl[0])
 		v_ref.append(msg.v_ref)
 		xy_waypoint.append(msg.xy_waypoint)
 		ay.append(msg.ay)
