@@ -53,6 +53,7 @@ class VehicleSimulator():
 			curr_state.v   = self.vx
 			curr_state.a   = self.acc
 			curr_state.df  = self.df
+			curr_state.ay  = self.ay
 
 			self.state_pub.publish(curr_state)
 			self.r.sleep()
