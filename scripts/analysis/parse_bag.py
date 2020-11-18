@@ -60,6 +60,8 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 			a.append(msg.a)
 			df.append(msg.df)
 
+			ay.append(msg.ay)
+
 		if mode != 'Sim': # only populate dynamic fields if we have real data from the vehicle.
 			tm = []
 			lat_accel = []
@@ -115,7 +117,6 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 		ay_mdl.append(msg.ay_mdl[0])
 		v_ref.append(msg.v_ref)
 		xy_waypoint.append(msg.xy_waypoint)
-		ay.append(msg.ay)
 	
 	# Some notes on the resulting output data.
 	# If simulated data, lat/lon will just be an array of 0's.
