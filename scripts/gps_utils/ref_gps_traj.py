@@ -128,6 +128,7 @@ class GPSRefTrajectory():
 		error_xy = xy_query - xy_waypoint # xy deviation (global frame)
 		error_frenet = np.dot(rot_global_to_frenet, error_xy[0,:]) # e_s, e_y deviation (Frenet frame)
 
+		waypoint_dict['xy_waypoint'] = xy_waypoint
 		waypoint_dict['s']     = self.trajectory[ closest_index, self.access_map['cdist'] ] # we assume e_s is approx. 0.
 		waypoint_dict['e_y']   = error_frenet[1]
 		waypoint_dict['e_psi'] = bound_angle_within_pi(psi_init - psi_waypoint)

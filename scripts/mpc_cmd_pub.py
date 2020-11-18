@@ -155,7 +155,6 @@ class MPCCommandPublisher():
 			loop_rate.sleep()
 
 	def publish_mpc_path_message(self, sol_dict, waypoint_dict):
-		print(sol_dict)
 		mpc_path_msg = mpc_path()
 		
 		mpc_path_msg.header.stamp = rospy.get_rostime()
@@ -180,6 +179,8 @@ class MPCCommandPublisher():
 		mpc_path_msg.e_y   = waypoint_dict['e_y']
 		mpc_path_msg.e_psi   = waypoint_dict['e_psi']
 		mpc_path_msg.v_ref   = sol_dict['z_ref2'][3]
+
+		mpc_path_msg.xy_waypoint   = waypoint_dict['xy_waypoint']
 
 		self.mpc_path_pub.publish(mpc_path_msg)
 				

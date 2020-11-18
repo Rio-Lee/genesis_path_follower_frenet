@@ -16,3 +16,4 @@ float64 e_y
 float64 e_psi
 float64[] ays
 float64 v_ref
+float64[] xy_waypoint
