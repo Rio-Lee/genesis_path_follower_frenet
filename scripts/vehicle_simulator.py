@@ -98,12 +98,10 @@ class VehicleSimulator():
 			if vx_n > 1e-6:
 				vy_n  = self.vy  + deltaT * ( 1.0/m*(Fyf*np.cos(self.df) + Fyr) - self.wz*self.vx )
 				wz_n  = self.wz  + deltaT * ( 1.0/Iz*(lf*Fyf*np.cos(self.df) - lr*Fyr) )
-
 				ay_n = vx_n*wz_n
 			else:
 				vy_n = 0.0
 				wz_n = 0.0
-
 				ay_n = 0
 
 
