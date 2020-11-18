@@ -253,7 +253,8 @@ class KinMPCPathFollower(Controller):
 
 	##
 	def _update_reference2(self, curv_ref, z_ref2):
-		self.opti.set_value(self.curv_ref, self.N*curv_ref[0])
+		self.opti.set_value(self.curv_ref, curv_ref)
+		# self.opti.set_value(self.curv_ref, self.N*curv_ref[0])
 		self.opti.set_value(self.z_ref2, z_ref2)
 
 	def _update_previous_input(self, acc_prev, df_prev):
