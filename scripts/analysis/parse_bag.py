@@ -15,6 +15,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 	lat = []; lon = []; a = []; df = []
 	se_v_x = []; se_v_y = []; se_yaw_rate = [];
 	se_long_accel = []; se_lat_accel = [];
+	ay = [];
 
 	b = rosbag.Bag(in_rosbag)
 	state_est_topic_name = '/vehicle/state_est'
@@ -107,7 +108,7 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 			t_enable = msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs
 			break	
 
-	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = []; ay_mdl = []; v_ref = []; xy_waypoint = []; ay = [];
+	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = []; ay_mdl = []; v_ref = []; xy_waypoint = [];
 	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):		
 		t_mpc_msg.append(msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs)
 		solve_status.append(msg.solve_status)
