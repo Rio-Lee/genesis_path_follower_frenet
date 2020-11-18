@@ -25,15 +25,16 @@
 
   <!--...................................................................-->
 
-  <!-- MPC, Simulation, and Plotting Nodes -->
-  <node ns="vehicle" pkg="genesis_path_follower" type="mpc_cmd_pub.py" name="mpc_node" output="log"/>
-  <node ns="vehicle" pkg="genesis_path_follower" type="vehicle_simulator.py" name="sim_node" output="log"/>
-  <node ns="vehicle" pkg="genesis_path_follower" type="gps_vehicle_plotter.py" name="plot_node" output="log"/>
-
+  
   <!-- Recording Node -->
   <arg name="exclude_topics" default="/image_raw"/>
 
   <node pkg="rosbag" type="record" name="rosbag_path_recorder" respawn="true" output="screen" 
         args="-a -o $(find genesis_path_follower)/bags/sim_path_follow -x $(arg exclude_topics)" />
+
+  <!-- MPC, Simulation, and Plotting Nodes -->
+  <node ns="vehicle" pkg="genesis_path_follower" type="mpc_cmd_pub.py" name="mpc_node" output="log"/>
+  <node ns="vehicle" pkg="genesis_path_follower" type="vehicle_simulator.py" name="sim_node" output="log"/>
+  <node ns="vehicle" pkg="genesis_path_follower" type="gps_vehicle_plotter.py" name="plot_node" output="log"/>
 
 </launch>
