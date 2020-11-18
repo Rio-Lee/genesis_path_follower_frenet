@@ -7,3 +7,4 @@ float64 lat # latitude (deg)
 float64 lon # longitude (deg)
 float64 a   # acceleration (m/s)
 float64 df  # front steering angle (rad)
+float64 ay

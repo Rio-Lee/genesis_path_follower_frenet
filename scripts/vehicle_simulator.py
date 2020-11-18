@@ -34,6 +34,7 @@ class VehicleSimulator():
 		self.vx  = rospy.get_param('V0', 0.0)		# longitudinal velocity (m/s)
 		self.vy  = 0.0								# lateral velocity (m/s)
 		self.wz  = 0.0								# yaw rate (rad/s)
+		self.ay = 0.0
 		
 		self.acc_time_constant = 0.4 # s
 		self.df_time_constant  = 0.1 # s
@@ -97,9 +98,14 @@ class VehicleSimulator():
 			if vx_n > 1e-6:
 				vy_n  = self.vy  + deltaT * ( 1.0/m*(Fyf*np.cos(self.df) + Fyr) - self.wz*self.vx )
 				wz_n  = self.wz  + deltaT * ( 1.0/Iz*(lf*Fyf*np.cos(self.df) - lr*Fyr) )
+
+				ay_n = vx_n*wz_n
 			else:
 				vy_n = 0.0
 				wz_n = 0.0
+
+				ay_n = 0
+
 
 			psi_n = self.psi + deltaT * ( self.wz )
 			X_n   = self.X   + deltaT * ( self.vx*np.cos(self.psi) - self.vy*np.sin(self.psi) )
@@ -112,6 +118,7 @@ class VehicleSimulator():
 			self.vx  = vx_n
 			self.vy  = vy_n
 			self.wz  = wz_n
+			self.ay = ay_n
 
 	def _update_low_level_control(self, dt_control):
 		# e_<n> = self.<n> - self.<n>_des

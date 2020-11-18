@@ -105,16 +105,17 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 			t_enable = msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs
 			break	
 
-	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = []; ay_mpc = []; v_ref = []; xy_waypoint = [];
+	t_mpc_msg = []; solve_status = []; s = []; e_y = []; e_psi = []; ay_mdl = []; v_ref = []; xy_waypoint = []; ay = [];
 	for topic, msg, _ in b.read_messages(topics=mpc_path_topic_name):		
 		t_mpc_msg.append(msg.header.stamp.secs + 1e-9 * msg.header.stamp.nsecs)
 		solve_status.append(msg.solve_status)
 		s.append(msg.s)
 		e_y.append(msg.e_y)
 		e_psi.append(msg.e_psi)
-		ay_mpc.append(msg.ays[0])
+		ay_mpc.append(msg.ay_mdl[0])
 		v_ref.append(msg.v_ref)
 		xy_waypoint.append(msg.xy_waypoint)
+		ay.append(msg.ay)
 	
 	# Some notes on the resulting output data.
 	# If simulated data, lat/lon will just be an array of 0's.
@@ -147,9 +148,10 @@ def parse_rosbag(mode, in_rosbag, out_mat):
 	rdict['s'] = s
 	rdict['e_y'] = e_y
 	rdict['e_psi'] = e_psi
-	rdict['ay_mpc'] = ay_mpc
+	rdict['ay_mdl'] = ay_mdl
 	rdict['v_ref'] = v_ref
 	rdict['xy_waypoint'] = xy_waypoint
+	rdict['ay'] = ay
 				
 	sio.savemat(out_mat, rdict)
 
