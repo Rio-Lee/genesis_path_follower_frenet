@@ -13,7 +13,7 @@ class KinMPCPathFollower(Controller):
 				 DT	= 0.2,    
 		         L_F        = 1.5213, # distance from CoG to front axle (m)
 		         L_R        = 1.4987, # distance from CoG to rear axle (m)
-				 V_SET		= 30./2.237,	# velocity set by a driver (m/s)
+				 V_SET		= 45./2.237,	# velocity set by a driver (m/s)
 				 AX_MAX     =  5.0,		
 		         AX_MIN     = -10.0,   # min/max acceleration constraint (m/s^2) 
 				 AY_MAX     =  4.0,		
